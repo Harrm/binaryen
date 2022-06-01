@@ -11,7 +11,7 @@ OPTION(BUILD_STATIC_LIB "Build as a static library" OFF)
 OPTION(BUILD_TOOLS      "Build tools"               ON)
 OPTION(TRACE_INTERPRETER "Enable instruction-grained tracing logs for interpreter. Extremely slow" OFF)
 
-IF(TRACE_INTERPRETER)
+IF (TRACE_INTERPRETER)
   ADD_COMPILE_DEFINITIONS(WASM_INTERPRETER_DEBUG)
 ENDIF()
 
@@ -172,6 +172,10 @@ IF(BUILD_STATIC_LIB)
   ADD_LIBRARY(binaryen STATIC ${binaryen_SOURCES})
 ELSE()
   ADD_LIBRARY(binaryen SHARED ${binaryen_SOURCES})
+ENDIF()
+
+IF (TRACE_INTERPRETER)
+  TARGET_COMPILE_DEFINITIONS(binaryen PUBLIC WASM_INTERPRETER_DEBUG)
 ENDIF()
 
 set(_dependencies "passes;wasm;asmjs;emscripten-optimizer;ir;cfg;support")
