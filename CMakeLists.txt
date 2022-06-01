@@ -9,6 +9,11 @@ ENDIF()
 
 OPTION(BUILD_STATIC_LIB "Build as a static library" OFF)
 OPTION(BUILD_TOOLS      "Build tools"               ON)
+OPTION(TRACE_INTERPRETER "Enable instruction-grained tracing logs for interpreter. Extremely slow" OFF)
+
+IF(TRACE_INTERPRETER)
+  ADD_COMPILE_DEFINITIONS(WASM_INTERPRETER_DEBUG)
+ENDIF()
 
 # Support functionality.
 
